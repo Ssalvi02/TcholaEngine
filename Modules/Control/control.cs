@@ -4,5 +4,8 @@ using System.Text;
 
 namespace CTRL
 {
-    class Key { }
+    class Key
+    {
+
+    }
 }

@@ -1,7 +1,7 @@
 using System;
 using System.Threading;
 
-namespace pong
+namespace PONG
 {
     class Program
     {
