@@ -23,10 +23,10 @@ namespace GEOM
 
     public class Rect : Shape
     {
-        public Rect(int b, int h, char symb, int x, int y)
+        public Rect(int whidth, int height, char symb, int x, int y)
         {
-            XSize = h;
-            YSize = b;
+            XSize = height;
+            YSize = whidth;
             PosX = x;
             PosY = y;
             Symb = symb;
@@ -45,14 +45,59 @@ namespace GEOM
 
     public class Triangle : Shape
     {
-        public Triangle()
+        //Falta desenhar na posição;
+        private char MODE;
+        public Triangle(char mode, int base_size, char symb, int x, int y)
         {
+            MODE = mode;
+            XSize = base_size;
+            Symb = symb;
+            PosX = x;
+            PosY = y;
+        }
 
+        public void Draw()
+        {
+            if(MODE == 'e')
+            {
+                for(int i = 1; i <= XSize; i++)      
+                {          
+                    for(int j = 1; j <= XSize - i; j++)      
+                    {      
+                        Console.Write(" ");  
+                    }      
+                    for(int k = 1; k <= i; k++)      
+                    {      
+                        Console.Write(Symb);      
+                    }      
+                    for(int l = i - 1; l >= 1; l--)      
+                    {      
+                        Console.Write(Symb);      
+                    }      
+                    Console.Write("\n");      
+                }    
+            }
+            else if (MODE == 's')
+            {
+                for (int i = 1; i <= XSize; i++)  
+                {  
+                    for (int j = 1; j <= i; j++)  
+                    {  
+                        Console.Write("");  
+                    }  
+                    for (int k = 1; k <= i; k++)  
+                    {  
+                        Console.Write(Symb);  
+                    }
+                    Console.Write("\n");      
+                }  
+            }
         }
     }
 
     public class Circle : Shape
     {
+        //Falta printar na posição;
         public Circle(int radius, char symb, int x, int y)
         {
             XSize = radius;
@@ -63,33 +108,25 @@ namespace GEOM
 
         public void Draw()
         {
-            switch (XSize)
-            {
-                case 0:
-                    PrintAtPosition(PosX, PosY, Symb);
-                    break;
-                default:
-                    double thickness = 0.1;
-                    Console.WriteLine();
-                    double rIn = XSize - thickness, rOut = XSize + thickness;
+            double thickness = 0.2;
+            Console.WriteLine();
+            double rIn = XSize - thickness, rOut = XSize + thickness;
 
-                    for (double y = XSize; y >= -XSize; --y)
+            for (double y = XSize; y >= -XSize; --y)
+            {
+                for (double x = -XSize; x < rOut; x += 0.5)
+                {
+                    double value = x * x + y * y;
+                    if (value >= rIn * rIn && value <= rOut * rOut)
                     {
-                        for (double x = -XSize; x < rOut; x += 0.5)
-                        {
-                            double value = x * x + y * y;
-                            if (value >= rIn * rIn && value <= rOut * rOut)
-                            {
-                                Console.Write(Symb);
-                            }
-                            else
-                            {
-                                Console.Write(" ");
-                            }
-                        }
-                        Console.WriteLine();
+                        Console.Write(Symb);
                     }
-                    break;
+                    else
+                    {
+                        Console.Write(" ");
+                    }
+                }
+                Console.WriteLine();
             }
         } 
     }
@@ -98,10 +135,10 @@ namespace GEOM
     {
         static void Main()
         {
-            Circle c = new Circle(2, '*', 80, 5);
+            Triangle t = new Triangle('e', 10, '&', 90, 0);
 
             Console.Clear();
-            c.Draw();
+            t.Draw();
         }
     }
 }
