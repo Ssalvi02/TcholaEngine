@@ -58,23 +58,33 @@ namespace GEOM
 
         public void Draw()
         {
+            int x = PosX;
+            int y = PosY;
             if(MODE == 'e')
             {
                 for(int i = 1; i <= XSize; i++)      
                 {          
                     for(int j = 1; j <= XSize - i; j++)      
                     {      
-                        Console.Write(" ");  
+                        PrintAtPosition(x, y, ' ');
+                        // Console.Write(" "); 
+                        x++; 
                     }      
                     for(int k = 1; k <= i; k++)      
                     {      
-                        Console.Write(Symb);      
+                        PrintAtPosition(x, y, Symb);
+                        // Console.Write(Symb);   
+                        x++;   
                     }      
                     for(int l = i - 1; l >= 1; l--)      
                     {      
-                        Console.Write(Symb);      
+                        PrintAtPosition(x, y, Symb);
+                        // Console.Write(Symb);  
+                        x++;    
                     }      
                     Console.Write("\n");      
+                    y++;
+                    x = PosX;
                 }    
             }
             else if (MODE == 's')
@@ -83,13 +93,12 @@ namespace GEOM
                 {  
                     for (int j = 1; j <= i; j++)  
                     {  
-                        Console.Write("");  
-                    }  
-                    for (int k = 1; k <= i; k++)  
-                    {  
-                        Console.Write(Symb);  
+                        PrintAtPosition(x, y, Symb);
+                        x++;
                     }
-                    Console.Write("\n");      
+                    Console.Write("\n"); 
+                    y++;
+                    x = PosX;
                 }  
             }
         }
@@ -135,7 +144,7 @@ namespace GEOM
     {
         static void Main()
         {
-            Triangle t = new Triangle('e', 10, '&', 90, 0);
+            Triangle t = new Triangle('e', 5, '@', 4, 7);
 
             Console.Clear();
             t.Draw();
