@@ -34,8 +34,10 @@ namespace CONTROL
 
     public enum KeyCode
     {
-        A = 'A', B = 'B', C = 'C', D = 'D', E = 'E', F = 'F', G = 'G', H = 'H', I = 'I', J = 'J', K = 'K', L = 'L', M = 'M', N = 'N', O = 'O', P = 'P', Q = 'Q', R = 'R', S = 'S', T = 'T', U = 'U', V = 'V', W = 'W', X = 'X', Y = 'Y', Z = 'Z', 
-        Space = 32, Escape = 27
+        A = 'A', B = 'B', C = 'C', D = 'D', E = 'E', F = 'F', G = 'G', 
+        H = 'H', I = 'I', J = 'J', K = 'K', L = 'L', M = 'M', N = 'N', 
+        O = 'O', P = 'P', Q = 'Q', R = 'R', S = 'S', T = 'T', U = 'U', 
+        V = 'V', W = 'W', X = 'X', Y = 'Y', Z = 'Z', Space = 32, Escape = 27
     }
     public class Input
     {
