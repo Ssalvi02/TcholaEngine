@@ -11,7 +11,7 @@ namespace GEOM
 {
     public class Shape
     {
-        public int XSize, YSize, PosX, PosY;
+        public int XSize, YSize;
         public char Symb;
 
         public static void PrintAtPosition(int x, int y, char symb)
@@ -23,19 +23,17 @@ namespace GEOM
 
     public class Rect : Shape
     {
-        public Rect(int whidth, int height, char symb, int x, int y)
+        public Rect(int whidth, int height, char symb)
         {
             XSize = height;
             YSize = whidth;
-            PosX = x;
-            PosY = y;
             Symb = symb;
         }
-        public void Draw()
+        public void Draw(int Posx, int Posy)
         {
-            for (int y = PosY; y < PosY + XSize; y++)
+            for (int y = Posy; y < Posy + XSize; y++)
             {
-                for (int x = PosX; x < PosX + YSize; x++)
+                for (int x = Posx; x < Posx + YSize; x++)
                 {
                     PrintAtPosition(x, y, Symb);
                 }
@@ -47,44 +45,36 @@ namespace GEOM
     {
         //Falta desenhar na posição;
         private char MODE;
-        public Triangle(char mode, int base_size, char symb, int x, int y)
+        public Triangle(char mode, int base_size, char symb)
         {
             MODE = mode;
             XSize = base_size;
             Symb = symb;
-            PosX = x;
-            PosY = y;
         }
 
-        public void Draw()
+        public void Draw(int Posx, int Posy)
         {
-            int x = PosX;
-            int y = PosY;
             if(MODE == 'e')
             {
                 for(int i = 1; i <= XSize; i++)      
                 {          
                     for(int j = 1; j <= XSize - i; j++)      
                     {      
-                        PrintAtPosition(x, y, ' ');
-                        // Console.Write(" "); 
-                        x++; 
+                        PrintAtPosition(Posx, Posy, ' ');
+                        Posx++; 
                     }      
                     for(int k = 1; k <= i; k++)      
                     {      
-                        PrintAtPosition(x, y, Symb);
-                        // Console.Write(Symb);   
-                        x++;   
+                        PrintAtPosition(Posx, Posy, Symb);
+                        Posx++;   
                     }      
                     for(int l = i - 1; l >= 1; l--)      
                     {      
-                        PrintAtPosition(x, y, Symb);
-                        // Console.Write(Symb);  
-                        x++;    
+                        PrintAtPosition(Posx, Posy, Symb);
+                        Posx++;    
                     }      
                     Console.Write("\n");      
-                    y++;
-                    x = PosX;
+                    Posy++;
                 }    
             }
             else if (MODE == 's')
@@ -93,12 +83,11 @@ namespace GEOM
                 {  
                     for (int j = 1; j <= i; j++)  
                     {  
-                        PrintAtPosition(x, y, Symb);
-                        x++;
+                        PrintAtPosition(Posx, Posy, Symb);
+                        Posx++;
                     }
                     Console.Write("\n"); 
-                    y++;
-                    x = PosX;
+                    Posy++;
                 }  
             }
         }
@@ -107,15 +96,13 @@ namespace GEOM
     public class Circle : Shape
     {
         //Falta printar na posição;
-        public Circle(int radius, char symb, int x, int y)
+        public Circle(int radius, char symb)
         {
             XSize = radius;
-            PosX = x;   
-            PosY = y;
             Symb = symb;
         }
 
-        public void Draw()
+        public void Draw(int Posx, int Posy)
         {
             double thickness = 0.2;
             Console.WriteLine();
@@ -138,16 +125,5 @@ namespace GEOM
                 Console.WriteLine();
             }
         } 
-    }
-
-    class prog
-    {
-        static void Main()
-        {
-            Triangle t = new Triangle('e', 5, '@', 4, 7);
-
-            Console.Clear();
-            t.Draw();
-        }
     }
 }
