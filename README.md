@@ -5,7 +5,7 @@
 ---
 
 1. Baixar o [Mono](https://www.mono-project.com/download/stable/)
-2. Rodar o comando `csc .\nomedoprograma.cs` para compilar
-3. Rodar o comando `mono.\nomedoprograma.exe` para executar o programa
+2. Rodar o comando `csc .\pong.cs ./Modules/Collision/collision.cs ./Modules/Control/control.cs ./Modules/Geometry/geometry.cs` para compilar
+3. Rodar o comando `mono.\pong.exe` para executar o programa
 
 
