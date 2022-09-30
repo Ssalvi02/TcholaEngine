@@ -9,3 +9,22 @@
 3. Rodar o comando `mono.\pong.exe` para executar o programa
 
 
+public class WhoAmI()
+{
+     public string GetName()
+     {
+          return "TcholaEngine";
+     }
+    public string GetPronouns()
+    {
+          return "C/#";
+    }
+    public string GetCurrentCity()
+    {
+          return "Campo Mourão - PR";
+    }
+    public string[] GetHobbies()
+    {
+          return "Watching anime, playing games";
+    }
+}
