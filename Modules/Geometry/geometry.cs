@@ -54,26 +54,28 @@ namespace GEOM
 
         public void Draw(int Posx, int Posy)
         {
+            int x = Posx;
             if(MODE == 'e')
             {
                 for(int i = 1; i <= XSize; i++)      
                 {          
                     for(int j = 1; j <= XSize - i; j++)      
                     {      
-                        PrintAtPosition(Posx, Posy, ' ');
-                        Posx++; 
+                        PrintAtPosition(x, Posy, ' ');
+                        x++; 
                     }      
                     for(int k = 1; k <= i; k++)      
                     {      
-                        PrintAtPosition(Posx, Posy, Symb);
-                        Posx++;   
+                        PrintAtPosition(x, Posy, Symb);
+                        x++;   
                     }      
                     for(int l = i - 1; l >= 1; l--)      
                     {      
-                        PrintAtPosition(Posx, Posy, Symb);
-                        Posx++;    
+                        PrintAtPosition(x, Posy, Symb);
+                        x++;    
                     }      
-                    Console.Write("\n");      
+                    Console.Write("\n");   
+                    x = Posx;
                     Posy++;
                 }    
             }
@@ -83,10 +85,11 @@ namespace GEOM
                 {  
                     for (int j = 1; j <= i; j++)  
                     {  
-                        PrintAtPosition(Posx, Posy, Symb);
-                        Posx++;
+                        PrintAtPosition(x, Posy, Symb);
+                        x++;
                     }
                     Console.Write("\n"); 
+                    x = Posx;
                     Posy++;
                 }  
             }

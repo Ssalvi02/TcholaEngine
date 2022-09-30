@@ -7,11 +7,14 @@ namespace CONTROL
 {
     public class Sys
     {
-        public static void RemoveScrollBars(int FC)
+        public enum ColorCode
         {
-            // 0 = Black; 1 = DarkBlue; 2 = DarkGreen; 3 = DarkCyan; 4 = DarkRed;
-            // 5 = DarkMagenta; 6 = DarkYellow; 7 = Gray; 8 = DarkGray; 9 = Blue;
-            // 10 = Green; 11 = Cyan; 12 = Red; 13 = Magenta; 14 = Yellow; 15 = White;
+            Black = 0, DarkBlue = 1, DarkGreen = 2, DarkCyan = 3, DarkRed = 4,
+            DarkMagenta = 5, DarkYellow = 6, Gray = 7, DarkGray = 8, Blue = 9,
+            Green = 10, Cyan = 11, Red = 12, Magenta = 13, Yellow = 14, White = 15
+        }
+        public static void RemoveScrollBars(ColorCode FC)
+        {
             System.ConsoleColor c = (System.ConsoleColor)FC;
             Console.ForegroundColor = c;
             Console.BufferHeight = GetWindowH();
