@@ -8,8 +8,9 @@
 2. Rodar o comando `csc .\pong.cs ./Modules/Collision/collision.cs ./Modules/Control/control.cs ./Modules/Geometry/geometry.cs` para compilar
 3. Rodar o comando `mono.\pong.exe` para executar o programa
 
+---
 
-public class WhoAmI()
+`public class WhoAmI()
 {
      public string GetName()
      {
@@ -27,4 +28,4 @@ public class WhoAmI()
     {
           return "Watching anime, playing games";
     }
-}
+}`
