@@ -11,8 +11,9 @@ namespace PONG
             //Geral
             static int screen_h = Sys.GetWindowH();
             static int screen_w = Sys.GetWindowW();
-            static Random randomGenerator = new Random();
+            static Random rand = new Random();
             static bool pmode2 = false;
+            static int random_color = rand.Next(0, 16);
 
             //Pad 1
             static int pad_1_size_y = 6;
@@ -34,21 +35,12 @@ namespace PONG
             //Ball
             static int posx_ball = screen_w/2;
             static int posy_ball = screen_h/2;
-            static bool ball_dir_up = true;
-            static bool ball_dir_right = true;
+            static int ball_dir_up = rand.Next(0, 2);
+            static int ball_dir_right = rand.Next(0, 2);
             static int ball_speed = 1; 
 
         static void ControlPad1()
         {
-            if(posy_1 < 1)
-            {
-                posy_1 = 0;
-            }
-            if(posy_1 > (screen_h - pad_1_size_y) - 1)
-            {
-                posy_1 = (screen_h - pad_1_size_y);
-            }
-
             if(Console.KeyAvailable)
             {
                 if(Input.GetKey(KeyCode.VK_UP) && posy_1 > 0)
@@ -56,7 +48,7 @@ namespace PONG
                     posy_1 -= pad1_speed;
                 }
 
-                if(Input.GetKey(KeyCode.VK_DOWN) && posy_1 < (screen_h - pad_1_size_y))
+                if(Input.GetKey(KeyCode.VK_DOWN) && posy_1 < (screen_h - pad_1_size_y) - 1)
                 {
                     posy_1 += pad1_speed;
                 }
@@ -64,15 +56,6 @@ namespace PONG
         }
         static void ControlPad2()
         {
-            if(posy_2 < 1)
-            {
-                posy_2 = 0;
-            }
-            if(posy_2 > (screen_h - pad_2_size_y) - 1)
-            {
-                posy_2 = (screen_h - pad_2_size_y);
-            }
-
             if(Console.KeyAvailable)
             {
                 if(Input.GetKey(KeyCode.W) && posy_2 > 0)
@@ -80,7 +63,7 @@ namespace PONG
                     posy_2 -= pad2_speed;
                 }
 
-                if(Input.GetKey(KeyCode.S) && posy_2 < (screen_h - pad_2_size_y))
+                if(Input.GetKey(KeyCode.S) && posy_2 < (screen_h - pad_2_size_y) - 1)
                 {
                     posy_2 += pad2_speed;
                 }
@@ -91,42 +74,54 @@ namespace PONG
         {
             if (posy_ball == 0)
             {
-                ball_dir_up = false;
+                System.Media.SystemSounds.Beep.Play();
+                ball_dir_up = 0;
             }
-            if (posy_ball == Console.WindowHeight - 3)
+            if (posy_ball == Console.WindowHeight - 4)
             {
-                ball_dir_up = true;
+                System.Media.SystemSounds.Beep.Play();
+                ball_dir_up = 1;
             }
 
-            if(Collider.IsColiding(posx_ball, screen_w - 1))
+            if(Collider.IsColiding(posx_ball, screen_w - 6))
             {
+                System.Media.SystemSounds.Exclamation.Play();
                 pad1_pts++;
                 ResetBall();
+                ResetPads();
             }
             
             if(Collider.IsColiding(posx_ball, 0))
             {
+                System.Media.SystemSounds.Question.Play();
                 pad2_pts++;
                 ResetBall();
+                ResetPads();
             }
 
             if (Collider.IsColiding(posx_ball, posx_2 + pad_2_size_x + 1, 2))
             {
-                if (Collider.IsColiding(posy_ball, posy_2, 3) && Collider.IsColiding(posy_ball, posy_2 + pad_2_size_y, 1))
+                if (Collider.IsColiding(posy_ball, posy_2 - 1, 3) && Collider.IsColiding(posy_ball, posy_2 + pad_2_size_y, 1))
                 {
-                    ball_dir_right = true;
+                    System.Media.SystemSounds.Hand.Play();
+                    random_color = rand.Next(0, 16);
+                    Sys.RemoveScrollBars((Sys.ColorCode)random_color);
+                    ball_dir_right = 1;
                 }
             }
 
-            if(Collider.IsColiding(posx_ball, posx_1 - pad_1_size_x - 1, 4))
+            if(Collider.IsColiding(posx_ball, posx_1 - pad_1_size_x - 4, 4))
             {
-                if(Collider.IsColiding(posy_ball, posy_1, 3) && Collider.IsColiding(posy_ball, posy_1 + pad_1_size_y, 1))
+                if(Collider.IsColiding(posy_ball, posy_1 - 1, 3) && Collider.IsColiding(posy_ball, posy_1 + pad_1_size_y, 1))
                 {
-                    ball_dir_right = false;
+                    System.Media.SystemSounds.Hand.Play();
+                    random_color = rand.Next(0, 16);
+                    Sys.RemoveScrollBars((Sys.ColorCode)random_color);
+                    ball_dir_right = 0;
                 }
             }
 
-            if (ball_dir_up)
+            if (ball_dir_up == 1)
             {
                 posy_ball -= ball_speed;
             }
@@ -136,7 +131,7 @@ namespace PONG
             }
 
 
-            if (ball_dir_right)
+            if (ball_dir_right == 1)
             {
                 posx_ball += ball_speed;
             }
@@ -150,7 +145,7 @@ namespace PONG
         {
             posx_ball = screen_w/2;
             posy_ball = screen_h/2;
-            Thread.Sleep(100);
+            Thread.Sleep(1000);
         }
 
         static void DrawResult()
@@ -177,28 +172,34 @@ namespace PONG
 
         static void AISecondP()
         {
-            int randomNumber = randomGenerator.Next(1, 101);
-            if (randomNumber <= 70)
+            int random_num = rand.Next(1, 101);
+            if (random_num <= 70)
             {
-                if (ball_dir_up == true && posy_1 > 1)
+                if (ball_dir_up == 1 && posy_1 > 1)
                 {
                     posy_1 -= pad1_speed;
                 }
-                else if (ball_dir_up == false && (posy_1 + pad_1_size_y) != screen_h)
+                else if (ball_dir_up == 0 && (posy_1 + pad_1_size_y) != screen_h)
                 {
                     posy_1 += pad1_speed;
                 }
             }
         }
+        static public void ResetPads()
+        {
+            posx_1 = screen_w - pad_1_size_x;
+            posy_1 = (screen_h/2) - (pad_1_size_y/2);
+            posx_2 = 0;
+            posy_2 = (screen_h/2) - (pad_2_size_y/2);
+        }
 
         static public void ResetAll()
         {
             ResetBall();
-            posx_1 = screen_w - pad_1_size_x;
-            posy_1 = (screen_h/2) - (pad_1_size_y/2);
+            ResetPads();
+            ball_dir_up = rand.Next(0, 2);
+            ball_dir_right = rand.Next(0, 2);
             pad1_pts = 0;
-            posx_2 = 0;
-            posy_2 = (screen_h/2) - (pad_2_size_y/2);
             pad2_pts = 0;
         }
 
@@ -206,12 +207,12 @@ namespace PONG
         {
             Rect r1 = new Rect(pad_1_size_x, pad_1_size_y, ']');
             Rect r2 = new Rect(pad_2_size_x, pad_2_size_y, '[');
-            Triangle t = new Triangle('e', 2, '*');
+            Circle c = new Circle(1, '*');
             r1.Draw(posx_1, posy_1);
             r2.Draw(posx_2, posy_2);
-            t.Draw(screen_w/2, screen_h/2);
+            c.Draw(screen_w/2, screen_h/2);
 
-            Sys.RemoveScrollBars(Sys.ColorCode.DarkGreen);
+            Sys.RemoveScrollBars((Sys.ColorCode)random_color);
 
             //Game loop
             while (true)
@@ -234,12 +235,13 @@ namespace PONG
                 {
                     AISecondP();
                 }
+
                 BallControl();
 
                 Console.Clear();
                 r1.Draw(posx_1, posy_1);
                 r2.Draw(posx_2, posy_2);
-                t.Draw(posx_ball, posy_ball);
+                c.Draw(posx_ball, posy_ball);
                 DrawResult();
                 Thread.Sleep(60);
             }
