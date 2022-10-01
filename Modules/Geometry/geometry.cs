@@ -107,25 +107,30 @@ namespace GEOM
 
         public void Draw(int Posx, int Posy)
         {
-            double thickness = 0.2;
+            double thickness = 0.16;
             Console.WriteLine();
             double rIn = XSize - thickness, rOut = XSize + thickness;
 
+            int auxX = Posx;
             for (double y = XSize; y >= -XSize; --y)
             {
-                for (double x = -XSize; x < rOut; x += 0.5)
+                for (double x = -XSize; x < rOut; x += 0.4)
                 {
                     double value = x * x + y * y;
                     if (value >= rIn * rIn && value <= rOut * rOut)
                     {
-                        Console.Write(Symb);
+                        PrintAtPosition(auxX, Posy, Symb);
+                        auxX++;
                     }
                     else
                     {
-                        Console.Write(" ");
+                        PrintAtPosition(auxX, Posy,' ');
+                        auxX++;
                     }
                 }
                 Console.WriteLine();
+                auxX = Posx;
+                Posy++;
             }
         } 
     }
