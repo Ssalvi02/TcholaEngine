@@ -14,6 +14,11 @@ namespace CONTROL
             DarkMagenta = 5, DarkYellow = 6, Gray = 7, DarkGray = 8, Blue = 9,
             Green = 10, Cyan = 11, Red = 12, Magenta = 13, Yellow = 14, White = 15
         }
+        public static void RemoveScrollBars()
+        {
+            Console.BufferHeight = GetWindowH();
+            Console.BufferWidth = GetWindowW();
+        }
         public static void RemoveScrollBars(ColorCode FC)
         {
             System.ConsoleColor c = (System.ConsoleColor)FC;
