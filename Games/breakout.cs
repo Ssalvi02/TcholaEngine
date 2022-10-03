@@ -13,7 +13,33 @@ namespace BREAKOUT
         static int screen_w = Sys.GetWindowW();
         static int state = 0;
 
+        //Paddle --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        static int pad_w = 15;
+        static int pad_h = 2;
+        static int posx_pad = (screen_w/2)-pad_w;
+        static int posy_pad = screen_h-3;
 
+        static void ControlPad()
+        {
+            if(Input.GetKey(KeyCode.VK_LEFT))
+            {
+                posx_pad--;
+            }
+
+            if(Input.GetKey(KeyCode.VK_RIGHT))
+            {
+                posx_pad++;
+            }
+        }
+
+        //Ball --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        static int ball_size = 1;
+        static int posx_ball = posx_pad + pad_w/3;
+        static int posy_ball = posy_pad - 3;
+        static bool ball_dir_up = false;
+        static bool ball_dir_right = false;
+        //Bricks --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        
         //Menu --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         static int select = 1;
 
@@ -136,7 +162,7 @@ namespace BREAKOUT
             Console.SetCursorPosition(screen_w/2 - offset - distance, 11);
             Console.Write(selector);
             
-            if(Input.GetKey(KeyCode.VK_RETURN))
+            if(Input.GetKey(KeyCode.VK_SPACE))
             {
                 return select;
             }
@@ -146,28 +172,27 @@ namespace BREAKOUT
         static void Main()
         {
             Sys.RemoveScrollBars();
+
+            Circle ball = new Circle(ball_size, '@');
+            Rect pad = new Rect(pad_w, pad_h, '*');
+
             while(true)
             {
-                Console.Clear();
-                DrawMenu();
-                state = ControlMenu();
-
-                switch(state)
+                if(state == 0)
                 {
-                    default:
-                        break;
-                    case 1:
-                        Console.Write("Load level 1");
-                        break;
-                    case 2:
-                        Console.Write("Load level 2");
-                        break;
-                    case 3:
-                        Console.Write("Load level 3");
-                        break;
-
+                    Console.Clear();
+                    DrawMenu();
+                    state = ControlMenu();
+                    Thread.Sleep(60);
                 }
-                Thread.Sleep(60);
+                else if(state == 1)
+                {
+                    ControlPad();
+                    Console.Clear();
+                    ball.Draw(posx_ball, posy_ball, Sys.ColorCode.Red);
+                    pad.Draw(posx_pad, posy_pad, Sys.ColorCode.Blue);
+                    Thread.Sleep(60);
+                }
             }
         }
     }

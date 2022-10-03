@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using CONTROL;
 
 
 
@@ -35,6 +36,17 @@ namespace GEOM
             {
                 for (int x = Posx; x < Posx + YSize; x++)
                 {
+                    PrintAtPosition(x, y, Symb);
+                }
+            }
+        }
+        public void Draw(int Posx, int Posy, Sys.ColorCode FG)
+        {
+            for (int y = Posy; y < Posy + XSize; y++)
+            {
+                for (int x = Posx; x < Posx + YSize; x++)
+                {
+                    Console.ForegroundColor = (System.ConsoleColor)FG;
                     PrintAtPosition(x, y, Symb);
                 }
             }
@@ -94,6 +106,53 @@ namespace GEOM
                 }  
             }
         }
+
+        public void Draw(int Posx, int Posy, Sys.ColorCode FG)
+        {
+            int x = Posx;
+            if(MODE == 'e')
+            {
+                for(int i = 1; i <= XSize; i++)      
+                {          
+                    for(int j = 1; j <= XSize - i; j++)      
+                    {
+                        Console.ForegroundColor = (System.ConsoleColor)FG;
+                        PrintAtPosition(x, Posy, ' ');
+                        x++; 
+                    }      
+                    for(int k = 1; k <= i; k++)      
+                    {   
+                        Console.ForegroundColor = (System.ConsoleColor)FG;   
+                        PrintAtPosition(x, Posy, Symb);
+                        x++;   
+                    }      
+                    for(int l = i - 1; l >= 1; l--)      
+                    {      
+                        Console.ForegroundColor = (System.ConsoleColor)FG;
+                        PrintAtPosition(x, Posy, Symb);
+                        x++;    
+                    }      
+                    Console.Write("\n");   
+                    x = Posx;
+                    Posy++;
+                }    
+            }
+            else if (MODE == 's')
+            {
+                for (int i = 1; i <= XSize; i++)  
+                {  
+                    for (int j = 1; j <= i; j++)  
+                    {  
+                        Console.ForegroundColor = (System.ConsoleColor)FG;
+                        PrintAtPosition(x, Posy, Symb);
+                        x++;
+                    }
+                    Console.Write("\n"); 
+                    x = Posx;
+                    Posy++;
+                }  
+            }
+        }
     }
 
     public class Circle : Shape
@@ -124,6 +183,37 @@ namespace GEOM
                     }
                     else
                     {
+                        PrintAtPosition(auxX, Posy,' ');
+                        auxX++;
+                    }
+                }
+                Console.WriteLine();
+                auxX = Posx;
+                Posy++;
+            }
+        } 
+
+        public void Draw(int Posx, int Posy, Sys.ColorCode FG)
+        {
+            double thickness = 0.16;
+            Console.WriteLine();
+            double rIn = XSize - thickness, rOut = XSize + thickness;
+
+            int auxX = Posx;
+            for (double y = XSize; y >= -XSize; --y)
+            {
+                for (double x = -XSize; x < rOut; x += 0.4)
+                {
+                    double value = x * x + y * y;
+                    if (value >= rIn * rIn && value <= rOut * rOut)
+                    {
+                        Console.ForegroundColor = (System.ConsoleColor)FG;
+                        PrintAtPosition(auxX, Posy, Symb);
+                        auxX++;
+                    }
+                    else
+                    {
+                        Console.ForegroundColor = (System.ConsoleColor)FG;
                         PrintAtPosition(auxX, Posy,' ');
                         auxX++;
                     }
