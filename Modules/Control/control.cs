@@ -5,7 +5,6 @@ using System.Runtime.InteropServices;
 
 namespace CONTROL
 {
-
     public class Sys
     {
         public enum ColorCode

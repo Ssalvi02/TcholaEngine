@@ -8,14 +8,14 @@ namespace PONG
 {
     class Program
     {
-            //Geral
+            //Geral --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
             static int screen_h = Sys.GetWindowH();
             static int screen_w = Sys.GetWindowW();
             static Random rand = new Random();
             static bool pmode2 = false;
             static int random_color = rand.Next(0, 16);
 
-            //Pad 1
+            //Pad 1 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
             static int pad_1_size_y = 6;
             static int pad_1_size_x = 3;
             static int pad1_speed = 1;
@@ -24,7 +24,7 @@ namespace PONG
             static int pad1_pts = 0;
 
             
-            //Pad 2
+            //Pad 2 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
             static int pad_2_size_y = 6;
             static int pad_2_size_x = 3;
             static int pad2_speed = 1;
@@ -32,7 +32,7 @@ namespace PONG
             static int posy_2 = (screen_h/2) - (pad_2_size_y/2);
             static int pad2_pts = 0;
 
-            //Ball
+            //Ball --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
             static int posx_ball = screen_w/2;
             static int posy_ball = screen_h/2;
             static int ball_dir_up = rand.Next(0, 2);
